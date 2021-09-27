@@ -4,6 +4,12 @@
 
 ### The largest cities example
 
+
+
+#### Simple SQL Statements
+
+
+
 ```sql
 
 # Create a table
@@ -65,4 +71,74 @@ VALUES
 ```
 
 
+
+#### Filtering Records
+
+```sql
+
+SELECT
+  name,
+  area
+FROM
+  cities
+WHERE
+  area > 4000
+
+# BETWEEN
+SELECT
+  name,
+  area
+FROM
+  cities
+WHERE
+  area BETWEEN 2000
+  AND 4000;
+
+# IN, NOT IN
+
+SELECT
+  name,
+  area
+FROM
+  cities
+WHERE
+  NAME NOT IN ('Delhi', 'Shanghai')
+
+# Combined Statement
+SELECT
+  name,
+  area
+FROM
+  cities
+WHERE
+  area NOT IN (3043, 8223)
+  OR name = 'Delhi'
+  OR name = 'Tokyo'
+
+
+# Calculations in "Where clauses"
+SELECT
+  name,
+  area
+FROM
+  cities
+WHERE
+  population / area > 6000;
+  
+
+# Update
+UPDATE
+  cities
+SET
+  population = 39505000
+WHERE
+   name = 'Tokyo' AND country = 'Japan'
+  
+# Delete
+DELETE FROM cities
+WHERE name = 'Tokyo'
+  
+  
+  
+```
 
