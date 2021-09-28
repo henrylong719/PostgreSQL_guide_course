@@ -142,3 +142,110 @@ WHERE name = 'Tokyo'
   
 ```
 
+
+
+### User Photos and comments Example
+
+```sql
+
+# Create a users table
+CREATE TABLE users (
+  id SERIAL PRIMARY KEY,
+  username VARCHAR(50)
+);
+
+INSERT INTO users (username)
+VALUES
+	('monahan93'),
+  ('pferrer'),
+  ('si93oins'),
+  ('99stroman');
+
+# Create a photos table
+CREATE TABLE photos (
+  id SERIAL PRIMARY KEY,
+  url VARCHAR(200),
+  user_id INTEGER REFERENCES users(id)
+);
+
+
+INSERT INTO photos (url, user_id)
+VALUES
+('http://one.jpg',4),
+('http://2.jpg',1),
+('http://3.jpg',2),
+('http://4.jpg',1),
+('http://5.jpg',3),
+('http://6.jpg',3),
+('http://7.jpg',4);
+
+
+SELECT
+  *
+FROM
+  photos
+WHERE
+  user_id = 3;
+
+# Join statement
+
+SELECT
+  url,
+  username
+FROM
+  photos
+  JOIN users ON users.id = photos.user_id;
+
+```
+
+
+
+### Delete
+
+```sql
+
+
+# ON DELETE CASCADE
+# Delete all realted data
+
+CREATE TABLE photos (
+id SERIAL PRIMARY KEY,
+url VARCHAR(200),
+user_id INTEGER REFERENCES users(id) ON DELETE CASCADE
+);
+
+INSERT INTO photos (url, user_id)
+VALUES
+  ('http:/one.jpg', 4),
+  ('http:/two.jpg', 1),
+  ('http:/25.jpg', 1),
+  ('http:/36.jpg', 1),
+  ('http:/754.jpg', 2),
+  ('http:/35.jpg', 3),
+  ('http:/256.jpg', 4);
+    
+   
+# ON DELETE SET NULL
+CREATE TABLE photos (
+id SERIAL PRIMARY KEY,
+url VARCHAR(200),
+user_id INTEGER REFERENCES users(id) ON DELETE SET NULL
+);
+     
+INSERT INTO photos (url, user_id)
+VALUES
+('http:/one.jpg', 4),
+('http:/754.jpg', 2),
+('http:/35.jpg', 3),
+('http:/256.jpg', 4);
+    
+
+```
+
+
+
+
+
+
+
+ 
