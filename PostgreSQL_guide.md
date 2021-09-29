@@ -244,8 +244,108 @@ VALUES
 
 
 
+### Relating Records with Joins
+
+```sql
+
+SELECT
+  contents,
+  username
+FROM
+  comments
+  JOIN users ON users.id = comments.user_id;
+  
+   
+SELECT
+  contents,
+  url
+FROM
+  COMMENTS
+  JOIN photos ON photos.id = comments.photo_id;
+
+```
 
 
 
+### Four kinds of Joins
+
+<img src="Images/Screen Shot 2021-09-29 at 9.24.33 pm.png" alt="Screen Shot 2021-09-29 at 9.24.33 pm" style="zoom:70%;" />
+
+
+
+<img src="Images/Screen Shot 2021-09-29 at 9.26.46 pm.png" alt="Screen Shot 2021-09-29 at 9.26.46 pm" style="zoom:70%;" />
 
  
+
+
+
+<img src="Images/Screen Shot 2021-09-29 at 9.25.52 pm.png" alt="Screen Shot 2021-09-29 at 9.25.52 pm" style="zoom:70%;" />
+
+
+
+<img src="Images/Screen Shot 2021-09-29 at 9.26.20 pm.png" alt="Screen Shot 2021-09-29 at 9.26.20 pm" style="zoom:70%;" />
+
+
+
+```sql
+
+SELECT
+  contents,
+  url
+FROM
+  COMMENTS
+  JOIN photos ON photos.id = comments.photo_id
+  WHERE comments.user_id = photos.user_id;
+  
+```
+
+
+
+### Three way Join
+
+![Screen Shot 2021-09-29 at 9.58.04 pm](Images/Screen Shot 2021-09-29 at 9.58.04 pm.png)
+
+
+
+```sql
+
+SELECT
+  contents,
+  url,
+  username
+FROM
+  COMMENTS
+  JOIN photos ON photos.id = comments.photo_id
+  JOIN users ON users.id = comments.user_id AND users.id = photos.user_id;
+  
+```
+
+
+
+
+
+```sql
+
+SELECT
+title,
+name,
+rating
+FROM
+reviews
+JOIN books ON books.author_id = reviews.reviewer_id
+JOIN authors ON authors.id = reviews.reviewer_id AND authors.id = books.author_id
+
+
+
+SELECT
+title,
+name,
+rating
+FROM
+reviews
+JOIN books ON books.id = reviews.book_id
+JOIN authors ON authors.id = reviews.reviewer_id AND authors.id = books.author_id
+
+
+```
+
