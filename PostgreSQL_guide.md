@@ -326,6 +326,18 @@ FROM
 
 ```sql
 
+
+SELECT
+title,
+name,
+rating
+FROM
+reviews
+JOIN books ON books.id = reviews.book_id
+JOIN authors ON authors.id = reviews.reviewer_id AND authors.id = books.author_id
+
+
+# WRONG
 SELECT
 title,
 name,
@@ -336,15 +348,68 @@ JOIN books ON books.author_id = reviews.reviewer_id
 JOIN authors ON authors.id = reviews.reviewer_id AND authors.id = books.author_id
 
 
+```
 
-SELECT
-title,
-name,
-rating
-FROM
-reviews
-JOIN books ON books.id = reviews.book_id
-JOIN authors ON authors.id = reviews.reviewer_id AND authors.id = books.author_id
+
+
+
+
+### Aggregation of Records
+
+
+
+<img src="Images/Screen Shot 2021-09-30 at 8.37.33 pm.png" alt="Screen Shot 2021-09-30 at 8.37.33 pm" style="zoom:50%;" />
+
+
+
+```sql
+
+# Query the number of comments created by users
+SELECT user_id, COUNT(id) AS num_comments_created
+FROM comments
+GROUP BY user_id;
+
+SELECT user_id, COUNT(*) 
+FROM comments
+GROUP BY user_id;
+
+
+SELECT photo_id, COUNT(*)
+FROM comments
+GROUP BY photo_id;
+
+
+# Query an author's name and the number of books they have authored
+
+SELECT authors.name, COUNT(*)
+FROM books
+JOIN authors ON books.author_id = authors.id
+GROUP BY authors.name;
+
+# Query the number of comments for each photo, where the photo_id is less than 3 and the photo has more than 2 comments
+
+# HAVING must be with GROUP BY
+
+SELECT photo_id, COUNT(*)
+FROM comments
+WHERE photo_id < 3
+GROUP BY photo_id
+HAVING COUNT(*) > 2;
+
+# Query the users(user_ids) where the user has commented on the first 50 photos and the user added more than 20 comments on those photos
+
+SELECT user_id, COUNT(*)
+FROM comments
+WHERE photo_id < 50
+GROUP BY user_id
+HAVING COUNT(*) > 20;
+
+# Query the names of manufacturers and total revenue  (price * units_sold) for all phones. Only print the manufacturers who have revenue greater than 2,000,000 for all the phones they sold.
+
+SELECT manufacturer, SUM(price * units_sold)
+FROM phones
+GROUP BY manufacturer
+HAVING SUM(price * units_sold) > 2000000
 
 
 ```
