@@ -437,3 +437,60 @@ LIMIT 20 OFFSET 40;
 
 ```
 
+
+
+### Unions and Intersections with Sets
+
+<img src="Images/Screen Shot 2021-10-07 at 8.56.44 pm.png" alt="Screen Shot 2021-10-07 at 8.56.44 pm" style="zoom:67%;" />
+
+
+
+```sql
+
+
+(
+  SELECT *
+  FROM products
+  ORDER BY price DESC
+  LIMIT 4
+)
+UNION
+(
+  SELECT *
+  FROM products
+  ORDER BY price / weight DESC
+  LIMIT 4
+);
+
+
+(
+  SELECT *
+  FROM products
+  ORDER BY price DESC
+  LIMIT 4
+)
+INTERSECT
+(
+  SELECT *
+  FROM products
+  ORDER BY price / weight DESC
+  LIMIT 4
+);
+
+(
+  SELECT *
+  FROM products
+  ORDER BY price DESC
+  LIMIT 4
+)
+EXCEPT
+(
+  SELECT *
+  FROM products
+  ORDER BY price / weight DESC
+  LIMIT 4
+);
+
+
+```
+
