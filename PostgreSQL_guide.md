@@ -414,3 +414,26 @@ HAVING SUM(price * units_sold) > 2000000
 
 ```
 
+
+
+### Sorting Records
+
+```sql
+
+SELECT *
+FROM products
+ORDER BY price DESC;
+
+
+SELECT *
+FROM products
+ORDER BY price, weight;
+
+
+SELECT *
+FROM products
+ORDER BY price
+LIMIT 20 OFFSET 40;
+
+```
+
