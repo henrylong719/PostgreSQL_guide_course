@@ -494,3 +494,189 @@ EXCEPT
 
 ```
 
+
+
+### Assembling Queries with SubQueries
+
+
+
+```sql
+
+
+SELECT
+  name,
+  price
+FROM
+  products
+WHERE
+  price > (
+    SELECT
+      MAX(price)
+    FROM
+      products
+    WHERE
+      department = 'Toys'
+  );
+  
+```
+
+
+
+![Screen Shot 2021-10-10 at 10.47.02 am](Images/Screen Shot 2021-10-10 at 10.47.02 am.png)
+
+```sql
+
+SELECT
+  name,
+  price,
+  (
+    SELECT
+      price
+    FROM
+      products
+    WHERE
+      id = 3
+  ) AS id_3_price
+FROM
+  products
+WHERE
+  price > 867;
+  
+# Result  
+name	price	id_3_price
+Practical Fresh Shirt	876	10
+Incredible Granite Mouse	989	10
+Generic Fresh Computer	926	10
+Fantastic Metal Chair	887	10
+Handcrafted Rubber Towels	945	10
+Practical Rubber Mouse	948	10
+Handmade Rubber Chicken	959	10
+Awesome Fresh Keyboard	982	10
+Incredible Granite Bacon	982	10
+Licensed Steel Towels	939	10
+Sleek Fresh Gloves	919	10
+
+
+
+
+SELECT
+name,
+price,
+price / (SELECT MAX(price) FROM phones) AS price_ratio
+FROM
+phones
+
+# Result
+name price price_ratio
+N1280 199 0.4874
+Iphone4 399 1
+Galaxy S 299 0.7493
+
+
+```
+
+
+
+
+
+```sql
+
+# Using a subquesry inside a FROM clause
+
+SELECT name, price_weight_ratio
+FROM (
+  SELECT name, price / weight AS price_weight_ratio
+  FROM products
+) AS p 
+WHERE price_weight_ratio > 5;
+
+
+
+  SELECT name, price / weight AS price_weight_ratio
+  FROM products 
+  WHERE price / weight > 5
+
+
+
+SELECT AVG(order_count)
+FROM(
+  SELECT user_id, COUNT(*) AS order_count
+  FROM orders
+  GROUP BY user_id
+  ) AS p
+  
+# Query Result
+avg
+11.0000000000000000
+
+
+SELECT MAX(average_price) AS max_average_price
+FROM
+ (SELECT AVG(price) AS average_price
+ FROM
+ phones
+ GROUP BY manufacturer
+ ) AS p
+ 
+ # Query Result
+ max_average_result
+ 399
+ 
+ 
+ 
+ SELECT first_name FROM
+  user 
+  JOIN ( SELECT user_id FROM orders WHERE
+      product_id = 3
+  ) AS o ON o.user_id = users.id
+
+
+SELECT 
+first_name FROM
+users
+JOIN orders 
+ON orders.user_id = users.id
+WHERE orders.product_id = 3
+
+ 
+SELECT id 
+FROM orders 
+WHERE product_id IN (
+  SELECT id FROM products WHERE price / weight > 50
+);
+
+
+SELECT name, price
+FROM products 
+WHERE price > (
+  SELECT AVG(price) FROM products 
+);
+
+
+
+
+SELECT name, price
+FROM 
+phones
+WHERE
+price > (
+SELECT price 
+FROM
+phones
+WHERE
+phones.name == 'S5620 Monte'
+)
+
+
+```
+
+
+
+
+
+
+
+
+
+
+
